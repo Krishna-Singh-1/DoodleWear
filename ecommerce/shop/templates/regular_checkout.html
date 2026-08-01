@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - DoodleWear</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradient 3s ease infinite;
+        }
+        
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .nav {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+        
+        .nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .nav a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .checkout-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        
+        .checkout-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .checkout-header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            color: #4ecdc4;
+        }
+        
+        .checkout-layout {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 40px;
+        }
+        
+        .checkout-forms {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        
+        .order-summary {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            height: fit-content;
+        }
+        
+        .form-section {
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .form-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            color: #4ecdc4;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #4ecdc4;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #4ecdc4;
+            box-shadow: 0 0 0 2px rgba(78, 205, 196, 0.2);
+        }
+        
+        .form-control option {
+            background: #333;
+            color: white;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .order-item:last-child {
+            border-bottom: none;
+        }
+        
+        .item-info {
+            flex: 1;
+        }
+        
+        .item-name {
+            font-weight: bold;
+            color: #4ecdc4;
+        }
+        
+        .item-details {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+        
+        .item-price {
+            font-weight: bold;
+            color: #ff6b6b;
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+        }
+        
+        .summary-total {
+            border-top: 2px solid rgba(255, 255, 255, 0.2);
+            padding-top: 15px;
+            margin-top: 15px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #4ecdc4;
+        }
+        
+        .btn-place-order {
+            width: 100%;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+            color: white;
+            padding: 20px;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 30px;
+        }
+        
+        .btn-place-order:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+        }
+        
+        .payment-methods {
+            display: grid;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .payment-method {
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .payment-method:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #4ecdc4;
+        }
+        
+        .payment-method.selected {
+            border-color: #4ecdc4;
+            background: rgba(78, 205, 196, 0.1);
+        }
+        
+        .card-details {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+        
+        .card-details.show {
+            display: block;
+        }
+        
+        .messages {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
+        .alert {
+            background: rgba(78, 205, 196, 0.9);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            animation: slideIn 0.5s ease;
+        }
+        
+        .alert-error {
+            background: rgba(255, 107, 107, 0.9);
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .checkout-layout {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .checkout-forms, .order-summary {
+                padding: 20px;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Messages -->
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <header class="header">
+        <div class="header-content">
+            <h1 class="logo">DoodleWear</h1>
+            <nav class="nav">
+                <a href="{% url 'home' %}">Home</a>
+                <a href="{% url 'shop' %}">Shop</a>
+                <a href="{% url 'custom_design' %}">Custom Design</a>
+                <a href="{% url 'contact' %}">Contact</a>
+                <a href="{% url 'cart' %}">
+                    🛒 Cart
+                    {% if cart_count > 0 %}
+                        <span style="background: #ff6b6b; border-radius: 50%; width: 20px; height: 20px; display: inline-flex; align-items: center; justify-content: center; font-size: 0.8rem; margin-left: 5px;">{{ cart_count }}</span>
+                    {% endif %}
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="checkout-container">
+        <div class="checkout-header">
+            <h1>🛒 Checkout</h1>
+            <p>Complete your order</p>
+        </div>
+        
+        <div class="checkout-layout">
+            <div class="checkout-forms">
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <!-- Customer Information -->
+                    <div class="form-section">
+                        <h2 class="section-title">
+                            <i class="bi bi-person-fill"></i>
+                            Customer Information
+                        </h2>
+                        
+                        <div class="form-group">
+                            <label for="{{ checkout_form.customer_name.id_for_label }}">Full Name</label>
+                            {{ checkout_form.customer_name }}
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="{{ checkout_form.customer_email.id_for_label }}">Email Address</label>
+                            {{ checkout_form.customer_email }}
+                        </div>
+                    </div>
+                    
+                    <!-- Shipping Address -->
+                    <div class="form-section">
+                        <h2 class="section-title">
+                            <i class="bi bi-truck"></i>
+                            Shipping Address
+                        </h2>
+                        
+                        <div class="form-group">
+                            <label for="{{ shipping_form.full_name.id_for_label }}">Full Name</label>
+                            {{ shipping_form.full_name }}
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="{{ shipping_form.address_line_1.id_for_label }}">Address Line 1</label>
+                            {{ shipping_form.address_line_1 }}
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="{{ shipping_form.address_line_2.id_for_label }}">Address Line 2 (Optional)</label>
+                            {{ shipping_form.address_line_2 }}
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="{{ shipping_form.city.id_for_label }}">City</label>
+                                {{ shipping_form.city }}
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="{{ shipping_form.state.id_for_label }}">State</label>
+                                {{ shipping_form.state }}
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="{{ shipping_form.postal_code.id_for_label }}">Postal Code</label>
+                                {{ shipping_form.postal_code }}
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="{{ shipping_form.country.id_for_label }}">Country</label>
+                                {{ shipping_form.country }}
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="{{ shipping_form.phone_number.id_for_label }}">Phone Number</label>
+                            {{ shipping_form.phone_number }}
+                        </div>
+                    </div>
+                    
+                    <!-- Payment Information -->
+                    <div class="form-section">
+                        <h2 class="section-title">
+                            <i class="bi bi-credit-card-fill"></i>
+                            Payment Information
+                        </h2>
+                        
+                        <div class="form-group">
+                            <label for="{{ payment_form.payment_method.id_for_label }}">Payment Method</label>
+                            {{ payment_form.payment_method }}
+                        </div>
+                        
+                        <div class="card-details" id="card-details">
+                            <div class="form-group">
+                                <label for="{{ payment_form.cardholder_name.id_for_label }}">Cardholder Name</label>
+                                {{ payment_form.cardholder_name }}
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="{{ payment_form.card_number.id_for_label }}">Card Number</label>
+                                {{ payment_form.card_number }}
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="{{ payment_form.expiry_month.id_for_label }}">Expiry Month</label>
+                                    {{ payment_form.expiry_month }}
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="{{ payment_form.expiry_year.id_for_label }}">Expiry Year</label>
+                                    {{ payment_form.expiry_year }}
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="{{ payment_form.cvv.id_for_label }}">CVV</label>
+                                {{ payment_form.cvv }}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn-place-order">
+                        <i class="bi bi-check-circle-fill"></i>
+                        Place Order
+                    </button>
+                </form>
+            </div>
+            
+            <!-- Order Summary -->
+            <div class="order-summary">
+                <h3 style="color: #4ecdc4; margin-bottom: 20px;">📋 Order Summary</h3>
+                
+                {% for item in cart_items %}
+                    <div class="order-item">
+                        <div class="item-info">
+                            <div class="item-name">{{ item.product.name }}</div>
+                            <div class="item-details">
+                                Size: {{ item.size|upper }} | Color: {{ item.color|title }} | Qty: {{ item.quantity }}
+                            </div>
+                        </div>
+                        <div class="item-price">₹{{ item.get_total_price }}</div>
+                    </div>
+                {% endfor %}
+                
+                <div class="summary-row">
+                    <span>Subtotal:</span>
+                    <span>₹{{ cart.get_total_price }}</span>
+                </div>
+                
+                <div class="summary-row">
+                    <span>Shipping:</span>
+                    <span>FREE</span>
+                </div>
+                
+                <div class="summary-row">
+                    <span>Tax:</span>
+                    <span>₹0.00</span>
+                </div>
+                
+                <div class="summary-row summary-total">
+                    <span>Total:</span>
+                    <span>₹{{ cart.get_total_price }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Auto-hide messages after 5 seconds
+        setTimeout(function() {
+            const messages = document.querySelector('.messages');
+            if (messages) {
+                messages.style.opacity = '0';
+                messages.style.transform = 'translateX(100%)';
+                setTimeout(function() {
+                    messages.remove();
+                }, 500);
+            }
+        }, 5000);
+        
+        // Show/hide card details based on payment method
+        const paymentMethodSelect = document.querySelector('#id_payment-payment_method');
+        const cardDetails = document.querySelector('#card-details');
+        
+        if (paymentMethodSelect && cardDetails) {
+            function toggleCardDetails() {
+                const selectedMethod = paymentMethodSelect.value;
+                if (selectedMethod === 'credit_card' || selectedMethod === 'debit_card') {
+                    cardDetails.classList.add('show');
+                } else {
+                    cardDetails.classList.remove('show');
+                }
+            }
+            
+            paymentMethodSelect.addEventListener('change', toggleCardDetails);
+            toggleCardDetails(); // Initial check
+        }
+    </script>
+</body>
+</html>

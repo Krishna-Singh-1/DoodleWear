@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Design - DoodleWear</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradient 3s ease infinite;
+        }
+        
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .description {
+            opacity: 0.8;
+            font-size: 1.1rem;
+        }
+        
+        .form-container {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #4ecdc4;
+        }
+        
+        .form-control, select {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        select {
+            cursor: pointer;
+        }
+        
+        select option {
+            background: #333;
+            color: white;
+        }
+        
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .form-control:focus, select:focus {
+            outline: none;
+            border-color: #4ecdc4;
+            box-shadow: 0 0 15px rgba(78, 205, 196, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        textarea.form-control {
+            resize: vertical;
+            min-height: 120px;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px 0 rgba(31, 38, 135, 0.4);
+            width: 100%;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px 0 rgba(31, 38, 135, 0.6);
+        }
+        
+        .back-link {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .back-link a {
+            color: #4ecdc4;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+        
+        .back-link a:hover {
+            color: #45b7d1;
+        }
+        
+        .messages {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
+        .alert {
+            background: rgba(78, 205, 196, 0.9);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            animation: slideIn 0.5s ease;
+        }
+        
+        .alert-success {
+            background: rgba(40, 167, 69, 0.9);
+        }
+        
+        .alert-error {
+            background: rgba(220, 53, 69, 0.9);
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .design-preview {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        
+        .product-mockup {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+            align-items: flex-start;
+            margin-top: 30px;
+        }
+        
+        .product-studio {
+            position: relative;
+            background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.02) 70%, transparent 100%);
+            border-radius: 20px;
+            padding: 40px;
+            min-height: 400px;
+            overflow: hidden;
+        }
+        
+        .studio-lighting {
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 100px;
+            background: radial-gradient(ellipse, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(20px);
+        }
+        
+        .product-stage {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 300px;
+            perspective: 1000px;
+        }
+        
+        .product-3d-container {
+            position: relative;
+            transform-style: preserve-3d;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        /* T-Shirt 3D Shape */
+        .product-3d-container.tshirt .product-face {
+            width: 280px;
+            height: 320px;
+            clip-path: polygon(20% 8%, 80% 8%, 100% 25%, 100% 100%, 0% 100%, 0% 25%);
+        }
+        
+        /* Hoodie 3D Shape */
+        .product-3d-container.hoodie .product-face {
+            width: 300px;
+            height: 360px;
+            clip-path: polygon(15% 5%, 85% 5%, 95% 15%, 100% 30%, 100% 100%, 0% 100%, 0% 30%, 5% 15%);
+        }
+        
+        /* Tank Top 3D Shape */
+        .product-3d-container.tank-top .product-face {
+            width: 260px;
+            height: 300px;
+            clip-path: polygon(30% 8%, 70% 8%, 100% 30%, 100% 100%, 0% 100%, 0% 30%);
+        }
+        
+        /* Long Sleeve 3D Shape */
+        .product-3d-container.long-sleeve .product-face {
+            width: 340px;
+            height: 280px;
+            clip-path: polygon(8% 20%, 30% 8%, 70% 8%, 92% 20%, 100% 100%, 0% 100%);
+        }
+        
+        .product-face {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            transform: translateZ(0);
+            box-shadow: 
+                0 25px 60px rgba(0, 0, 0, 0.4),
+                0 12px 25px rgba(0, 0, 0, 0.3),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+        }
+        
+        .fabric-texture {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.15;
+            background: 
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(255, 255, 255, 0.03) 2px,
+                    rgba(255, 255, 255, 0.03) 4px
+                ),
+                repeating-linear-gradient(
+                    -45deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(0, 0, 0, 0.03) 2px,
+                    rgba(0, 0, 0, 0.03) 4px
+                );
+        }
+        
+        .fabric-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 70% 60%, rgba(0, 0, 0, 0.05) 0%, transparent 40%),
+                linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(0, 0, 0, 0.02) 100%);
+        }
+        
+        /* Realistic Fabric Colors */
+        .product-face.black {
+            background: linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 50%, #0d0d0d 100%);
+        }
+        .product-face.white {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f8f8 50%, #f0f0f0 100%);
+            color: #333;
+        }
+        .product-face.red {
+            background: linear-gradient(135deg, #ff4757 0%, #c44569 50%, #a73653 100%);
+        }
+        .product-face.blue {
+            background: linear-gradient(135deg, #3742fa 0%, #2f3542 50%, #25293a 100%);
+        }
+        .product-face.green {
+            background: linear-gradient(135deg, #2ed573 0%, #1abc9c 50%, #16a085 100%);
+        }
+        .product-face.yellow {
+            background: linear-gradient(135deg, #ffa502 0%, #ff6348 50%, #e74c3c 100%);
+            color: #333;
+        }
+        .product-face.purple {
+            background: linear-gradient(135deg, #5352ed 0%, #40407a 50%, #2c2c54 100%);
+        }
+        .product-face.pink {
+            background: linear-gradient(135deg, #ff3838 0%, #ff6b81 50%, #e55a7a 100%);
+        }
+        
+        .design-area {
+            position: absolute;
+            top: 35%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .design-text-3d {
+            font-size: 1.4rem;
+            font-weight: bold;
+            text-align: center;
+            text-shadow: 
+                2px 2px 0px rgba(0, 0, 0, 0.3),
+                4px 4px 8px rgba(0, 0, 0, 0.2),
+                0 0 20px rgba(255, 255, 255, 0.1);
+            padding: 15px 20px;
+            border-radius: 8px;
+            background: 
+                linear-gradient(145deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05)),
+                radial-gradient(circle at center, rgba(255, 255, 255, 0.1), transparent);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transform: translateZ(5px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 
+                0 8px 25px rgba(0, 0, 0, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+        
+        .seam {
+            position: absolute;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.05));
+            width: 2px;
+        }
+        
+        .seam-left {
+            left: 15%;
+            top: 8%;
+            height: 85%;
+            transform: skewY(-2deg);
+        }
+        
+        .seam-right {
+            right: 15%;
+            top: 8%;
+            height: 85%;
+            transform: skewY(2deg);
+        }
+        
+        .collar {
+            position: absolute;
+            top: 8%;
+            left: 20%;
+            right: 20%;
+            height: 15px;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), transparent);
+            border-radius: 8px 8px 0 0;
+            transform: perspective(100px) rotateX(15deg);
+        }
+        
+        .product-shadow {
+            position: absolute;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.3), transparent);
+            transform-origin: top;
+        }
+        
+        .left-shadow {
+            left: -8px;
+            top: 0;
+            width: 8px;
+            height: 100%;
+            transform: skewY(2deg) translateZ(-1px);
+        }
+        
+        .right-shadow {
+            right: -8px;
+            top: 0;
+            width: 8px;
+            height: 100%;
+            transform: skewY(-2deg) translateZ(-1px);
+        }
+        
+        .product-tag {
+            position: absolute;
+            bottom: -15px;
+            right: 20px;
+            background: linear-gradient(135deg, #4ecdc4, #45b7d1);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            box-shadow: 
+                0 8px 20px rgba(78, 205, 196, 0.3),
+                0 2px 8px rgba(0, 0, 0, 0.2);
+            transform: translateZ(10px);
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateZ(10px) translateY(0px); }
+            50% { transform: translateZ(10px) translateY(-5px); }
+        }
+        
+        .preview-panel {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .preview-panel h4 {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            color: #4ecdc4;
+            text-align: center;
+        }
+        
+        .detail-grid {
+            display: grid;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .detail-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .detail-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-2px);
+        }
+        
+        .detail-icon {
+            font-size: 1.5rem;
+            width: 30px;
+            text-align: center;
+        }
+        
+        .detail-content {
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .detail-label {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+        
+        .detail-value {
+            color: white;
+            font-weight: bold;
+            font-size: 0.95rem;
+        }
+        
+        .preview-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .rotate-btn, .zoom-btn {
+            flex: 1;
+            padding: 12px;
+            background: linear-gradient(135deg, rgba(78, 205, 196, 0.2), rgba(69, 183, 209, 0.2));
+            border: 1px solid rgba(78, 205, 196, 0.3);
+            color: #4ecdc4;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+        
+        .rotate-btn:hover, .zoom-btn:hover {
+            background: linear-gradient(135deg, rgba(78, 205, 196, 0.3), rgba(69, 183, 209, 0.3));
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(78, 205, 196, 0.2);
+        }
+        
+        .preview-icon {
+            font-size: 4rem;
+            margin-bottom: 15px;
+            opacity: 0.7;
+        }
+        
+        .section-title {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: #4ecdc4;
+            text-align: center;
+        }
+        
+        .pricing-info {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 20px;
+        }
+        
+        .pricing-info h4 {
+            color: #4ecdc4;
+            margin-bottom: 10px;
+        }
+        
+        .pricing-info ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .pricing-info li {
+            padding: 5px 0;
+            opacity: 0.8;
+        }
+        
+        .pricing-info li::before {
+            content: "✓ ";
+            color: #4ecdc4;
+            font-weight: bold;
+        }
+        
+        /* Design Gallery Styles */
+        .design-gallery-section {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 30px;
+        }
+        
+        .design-gallery-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .design-gallery-title {
+            font-size: 1.3rem;
+            color: #4ecdc4;
+            margin: 0;
+        }
+        
+        .selected-design-info {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-style: italic;
+        }
+        
+        .design-gallery {
+            position: relative;
+            overflow: hidden;
+            padding: 10px 0;
+        }
+        
+        .design-scroll-container {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding: 10px 5px;
+            -ms-overflow-style: none;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(78, 205, 196, 0.5) rgba(255, 255, 255, 0.1);
+        }
+        
+        .design-scroll-container::-webkit-scrollbar {
+            height: 8px;
+        }
+        
+        .design-scroll-container::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        
+        .design-scroll-container::-webkit-scrollbar-thumb {
+            background: linear-gradient(90deg, #4ecdc4, #45b7d1);
+            border-radius: 10px;
+        }
+        
+        .design-scroll-container::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(90deg, #45b7d1, #4ecdc4);
+        }
+        
+        .design-card {
+            min-width: 180px;
+            max-width: 180px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+        }
+        
+        .design-card:hover {
+            transform: translateY(-5px) scale(1.05);
+            border-color: #4ecdc4;
+            box-shadow: 0 10px 30px rgba(78, 205, 196, 0.3);
+            background: rgba(255, 255, 255, 0.12);
+        }
+        
+        .design-card.selected {
+            border-color: #4ecdc4;
+            background: rgba(78, 205, 196, 0.15);
+            box-shadow: 0 0 20px rgba(78, 205, 196, 0.5);
+        }
+        
+        .design-card.selected::before {
+            content: "✓";
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: linear-gradient(135deg, #4ecdc4, #45b7d1);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 15px rgba(78, 205, 196, 0.4);
+            z-index: 10;
+        }
+        
+        .design-image-wrapper {
+            width: 100%;
+            height: 150px;
+            border-radius: 8px;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+        
+        .design-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .design-card:hover .design-image {
+            transform: scale(1.1);
+        }
+        
+        .design-name {
+            font-size: 0.95rem;
+            font-weight: bold;
+            color: white;
+            text-align: center;
+            margin-bottom: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .design-description {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .scroll-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+        
+        .scroll-btn {
+            background: linear-gradient(135deg, rgba(78, 205, 196, 0.2), rgba(69, 183, 209, 0.2));
+            border: 1px solid rgba(78, 205, 196, 0.3);
+            color: #4ecdc4;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+        
+        .scroll-btn:hover {
+            background: linear-gradient(135deg, rgba(78, 205, 196, 0.3), rgba(69, 183, 209, 0.3));
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(78, 205, 196, 0.2);
+        }
+        
+        .no-designs-message {
+            text-align: center;
+            padding: 40px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1.1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            
+            .logo {
+                font-size: 2rem;
+            }
+            
+            .form-container {
+                padding: 20px;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .product-mockup {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .product-studio {
+                padding: 20px;
+                min-height: 300px;
+            }
+            
+            .product-3d-container.tshirt .product-face {
+                width: 240px;
+                height: 280px;
+            }
+            
+            .product-3d-container.hoodie .product-face {
+                width: 260px;
+                height: 320px;
+            }
+            
+            .product-3d-container.tank-top .product-face {
+                width: 220px;
+                height: 260px;
+            }
+            
+            .product-3d-container.long-sleeve .product-face {
+                width: 280px;
+                height: 240px;
+            }
+            
+            .design-text-3d {
+                font-size: 1.1rem;
+                padding: 10px 15px;
+            }
+            
+            .preview-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Messages -->
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <div class="container">
+        <div class="header">
+            <h1 class="logo">DoodleWear</h1>
+            <h2 class="subtitle">Custom Design Studio</h2>
+            <p class="description">Create your unique design! Fill out the form below and we'll bring your vision to life.</p>
+        </div>
+        
+        <div class="design-preview">
+            <h3>🔥 Live Product Preview</h3>
+            <p>Watch your design come to life in stunning 3D!</p>
+            
+            <div class="product-mockup">
+                <div class="product-studio">
+                    <div class="studio-lighting"></div>
+                    <div class="product-stage">
+                        <div id="productContainer" class="product-3d-container tshirt">
+                            <!-- Front of the garment -->
+                            <div id="productFront" class="product-face front black">
+                                <div class="fabric-texture"></div>
+                                <div class="fabric-overlay"></div>
+                                <div id="designArea" class="design-area">
+                                    <div id="designText" class="design-text-3d">Your Design</div>
+                                    <img id="selectedDesignImage" src="" alt="" style="display: none; max-width: 80%; max-height: 100px; object-fit: contain; margin-top: 10px;">
+                                </div>
+                                <div class="seam seam-left"></div>
+                                <div class="seam seam-right"></div>
+                                <div class="collar"></div>
+                            </div>
+                            
+                            <!-- Side shadows for 3D effect -->
+                            <div class="product-shadow left-shadow"></div>
+                            <div class="product-shadow right-shadow"></div>
+                            
+                            <!-- Product label -->
+                            <div id="productLabel" class="product-tag">T-SHIRT</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="preview-panel">
+                    <h4>📋 Product Details</h4>
+                    <div class="detail-grid">
+                        <div class="detail-card">
+                            <div class="detail-icon">👕</div>
+                            <div class="detail-content">
+                                <span class="detail-label">Type</span>
+                                <span id="previewType" class="detail-value">T-Shirt</span>
+                            </div>
+                        </div>
+                        <div class="detail-card">
+                            <div class="detail-icon">📏</div>
+                            <div class="detail-content">
+                                <span class="detail-label">Size</span>
+                                <span id="previewSize" class="detail-value">Medium</span>
+                            </div>
+                        </div>
+                        <div class="detail-card">
+                            <div class="detail-icon">🎨</div>
+                            <div class="detail-content">
+                                <span class="detail-label">Color</span>
+                                <span id="previewColor" class="detail-value">Black</span>
+                            </div>
+                        </div>
+                        <div class="detail-card">
+                            <div class="detail-icon">🔢</div>
+                            <div class="detail-content">
+                                <span class="detail-label">Qty</span>
+                                <span id="previewQuantity" class="detail-value">1</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="preview-actions">
+                        <button class="rotate-btn" onclick="rotateProduct()">🔄 Rotate</button>
+                        <button class="zoom-btn" onclick="zoomProduct()">🔍 Zoom</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-container">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <div class="section-title">📝 Customer Information</div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="{{ form.customer_name.id_for_label }}">Your Name *</label>
+                        {{ form.customer_name }}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.customer_email.id_for_label }}">Email Address *</label>
+                        {{ form.customer_email }}
+                    </div>
+                </div>
+                
+                <div class="section-title">👕 Product Details</div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="{{ form.clothing_type.id_for_label }}">Clothing Type *</label>
+                        {{ form.clothing_type }}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.size.id_for_label }}">Size *</label>
+                        {{ form.size }}
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="{{ form.color.id_for_label }}">Base Color *</label>
+                        {{ form.color }}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.quantity.id_for_label }}">Quantity *</label>
+                        {{ form.quantity }}
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="{{ form.price_range.id_for_label }}">💰 Price Range *</label>
+                        {{ form.price_range }}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.fabric_type.id_for_label }}">🧵 Fabric Type *</label>
+                        {{ form.fabric_type }}
+                    </div>
+                </div>
+                
+                <div class="section-title">🎨 Design Selection</div>
+                
+                <div class="design-gallery-section">
+                    <div class="design-gallery-header">
+                        <h4 class="design-gallery-title">🎨 Choose from Ready-Made Designs</h4>
+                        <span id="selectedDesignName" class="selected-design-info">No design selected</span>
+                    </div>
+                    
+                    {% if designs %}
+                        <div class="design-gallery">
+                            <div class="design-scroll-container" id="designScrollContainer">
+                                {% for design in designs %}
+                                <div class="design-card" data-design-id="{{ design.id }}" data-design-name="{{ design.name }}" data-design-image="{% if design.image %}{{ design.image.url }}{% endif %}" onclick="selectDesign({{ design.id }}, '{{ design.name }}', '{% if design.image %}{{ design.image.url }}{% endif %}')">
+                                    <div class="design-image-wrapper">
+                                        {% if design.image %}
+                                            <img src="{{ design.image.url }}" alt="{{ design.name }}" class="design-image">
+                                        {% else %}
+                                            <div style="color: rgba(255,255,255,0.5); font-size: 3rem;">🎨</div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="design-name">{{ design.name }}</div>
+                                    {% if design.description %}
+                                        <div class="design-description">{{ design.description }}</div>
+                                    {% endif %}
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        
+                        <div class="scroll-buttons">
+                            <button type="button" class="scroll-btn" onclick="scrollDesigns('left')">← Scroll Left</button>
+                            <button type="button" class="scroll-btn" onclick="scrollDesigns('right')">Scroll Right →</button>
+                        </div>
+                    {% else %}
+                        <div class="no-designs-message">
+                            🖌️ No pre-made designs available yet. Upload your own design below!
+                        </div>
+                    {% endif %}
+                    
+                    <!-- Hidden field to store selected design ID -->
+                    {{ form.selected_design }}
+                </div>
+                
+                <div class="form-group">
+                    <label for="{{ form.design_placement.id_for_label }}">🎯 Design Placement *</label>
+                    {{ form.design_placement }}
+                </div>
+                
+                <div class="section-title">🖋️ Custom Design Specifications</div>
+                <div class="form-group">
+                    <label for="{{ form.design_text.id_for_label }}">Text for Design (Optional)</label>
+                    {{ form.design_text }}
+                </div>
+                
+                <div class="form-group">
+                    <label for="{{ form.design_description.id_for_label }}">Design Description *</label>
+                    {{ form.design_description }}
+                </div>
+                
+                <div class="form-group">
+                    <label for="{{ form.design_upload.id_for_label }}">📎 Upload Design File (Optional)</label>
+                    <p style="font-size: 0.9rem; opacity: 0.8; margin-bottom: 10px;">Upload your design sketch or inspiration (.pdf, .jpeg, .png)</p>
+                    {{ form.design_upload }}
+                </div>
+                
+                <div class="pricing-info">
+                    <h4>💰 What's Included:</h4>
+                    <ul>
+                        <li>Custom design consultation</li>
+                        <li>Digital mockup for approval</li>
+                        <li>High-quality printing/embroidery</li>
+                        <li>Free revisions (up to 2)</li>
+                        <li>Fast turnaround (5-7 business days)</li>
+                    </ul>
+                </div>
+                
+                <button type="submit" class="submit-btn">Submit Custom Order</button>
+            </form>
+        </div>
+        
+        <div class="back-link">
+            <a href="{% url 'home' %}">← Back to Home</a>
+        </div>
+    </div>
+    <script>
+        let currentRotation = 0;
+        let isZoomed = false;
+        
+        // Live preview functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const productContainer = document.getElementById('productContainer');
+            const productFront = document.getElementById('productFront');
+            const designText = document.getElementById('designText');
+            const productLabel = document.getElementById('productLabel');
+            const previewType = document.getElementById('previewType');
+            const previewSize = document.getElementById('previewSize');
+            const previewColor = document.getElementById('previewColor');
+            const previewQuantity = document.getElementById('previewQuantity');
+            
+            // Get form elements
+            const clothingTypeSelect = document.querySelector('select[name="clothing_type"]');
+            const sizeSelect = document.querySelector('select[name="size"]');
+            const colorSelect = document.querySelector('select[name="color"]');
+            const quantityInput = document.querySelector('input[name="quantity"]');
+            const designTextInput = document.querySelector('input[name="design_text"]');
+            
+            // Update preview when clothing type changes
+            if (clothingTypeSelect) {
+                clothingTypeSelect.addEventListener('change', function() {
+                    const selectedType = this.value;
+                    const displayName = this.options[this.selectedIndex].text;
+                    
+                    // Remove all type classes from container
+                    productContainer.classList.remove('tshirt', 'hoodie', 'tank-top', 'long-sleeve');
+                    
+                    // Add new type class
+                    if (selectedType === 't-shirt') {
+                        productContainer.classList.add('tshirt');
+                    } else if (selectedType === 'hoodie') {
+                        productContainer.classList.add('hoodie');
+                    } else if (selectedType === 'tank-top') {
+                        productContainer.classList.add('tank-top');
+                    } else if (selectedType === 'long-sleeve') {
+                        productContainer.classList.add('long-sleeve');
+                    }
+                    
+                    productLabel.textContent = displayName.toUpperCase();
+                    previewType.textContent = displayName;
+                    
+                    // Add transition effect
+                    productContainer.style.transform = 'scale(0.8) rotateY(180deg)';
+                    setTimeout(() => {
+                        productContainer.style.transform = `rotateY(${currentRotation}deg) scale(${isZoomed ? 1.2 : 1})`;
+                    }, 300);
+                });
+            }
+            
+            // Update preview when size changes
+            if (sizeSelect) {
+                sizeSelect.addEventListener('change', function() {
+                    const displayName = this.options[this.selectedIndex].text;
+                    previewSize.textContent = displayName;
+                });
+            }
+            
+            // Update preview when color changes
+            if (colorSelect) {
+                colorSelect.addEventListener('change', function() {
+                    const selectedColor = this.value;
+                    const displayName = this.options[this.selectedIndex].text;
+                    
+                    // Remove all color classes from front face
+                    productFront.classList.remove('black', 'white', 'red', 'blue', 'green', 'yellow', 'purple', 'pink');
+                    
+                    // Add new color class
+                    productFront.classList.add(selectedColor);
+                    
+                    previewColor.textContent = displayName;
+                    
+                    // Add color change effect
+                    productFront.style.filter = 'brightness(1.3) contrast(1.1)';
+                    setTimeout(() => {
+                        productFront.style.filter = 'none';
+                    }, 400);
+                });
+            }
+            
+            // Update preview when quantity changes
+            if (quantityInput) {
+                quantityInput.addEventListener('input', function() {
+                    const quantity = this.value || '1';
+                    previewQuantity.textContent = quantity;
+                });
+            }
+            
+            // Update preview when design text changes
+            if (designTextInput) {
+                designTextInput.addEventListener('input', function() {
+                    const text = this.value || 'Your Design';
+                    designText.textContent = text;
+                    
+                    // Add spectacular text animation
+                    designText.style.transform = 'scale(0) rotateX(90deg)';
+                    designText.style.filter = 'blur(5px)';
+                    
+                    setTimeout(() => {
+                        designText.style.transform = 'scale(1) rotateX(0deg)';
+                        designText.style.filter = 'none';
+                        
+                        // Add glow effect
+                        designText.style.boxShadow = '0 0 30px rgba(78, 205, 196, 0.8), inset 0 0 20px rgba(255, 255, 255, 0.1)';
+                        setTimeout(() => {
+                            designText.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)';
+                        }, 600);
+                    }, 100);
+                });
+            }
+            
+            // Add advanced hover effects
+            if (productContainer) {
+                productContainer.addEventListener('mouseenter', function() {
+                    this.style.transform += ' translateY(-10px)';
+                    this.style.filter = 'drop-shadow(0 20px 40px rgba(0, 0, 0, 0.3))';
+                });
+                
+                productContainer.addEventListener('mouseleave', function() {
+                    this.style.transform = `rotateY(${currentRotation}deg) scale(${isZoomed ? 1.2 : 1})`;
+                    this.style.filter = 'none';
+                });
+            }
+            
+            // Initialize preview with default values
+            setTimeout(() => {
+                if (clothingTypeSelect) clothingTypeSelect.dispatchEvent(new Event('change'));
+                if (sizeSelect) sizeSelect.dispatchEvent(new Event('change'));
+                if (colorSelect) colorSelect.dispatchEvent(new Event('change'));
+                if (quantityInput) quantityInput.dispatchEvent(new Event('input'));
+            }, 100);
+        });
+        
+        // Rotate product function
+        function rotateProduct() {
+            const productContainer = document.getElementById('productContainer');
+            currentRotation += 90;
+            if (currentRotation >= 360) currentRotation = 0;
+            
+            productContainer.style.transform = `rotateY(${currentRotation}deg) scale(${isZoomed ? 1.2 : 1})`;
+            
+            // Add rotation sound effect (visual feedback)
+            productContainer.style.filter = 'brightness(1.2) saturate(1.3)';
+            setTimeout(() => {
+                productContainer.style.filter = 'none';
+            }, 300);
+        }
+        
+        // Zoom product function
+        function zoomProduct() {
+            const productContainer = document.getElementById('productContainer');
+            isZoomed = !isZoomed;
+            
+            const scale = isZoomed ? 1.2 : 1;
+            productContainer.style.transform = `rotateY(${currentRotation}deg) scale(${scale})`;
+            
+            // Update button text
+            const zoomBtn = document.querySelector('.zoom-btn');
+            zoomBtn.textContent = isZoomed ? '🔍 Zoom Out' : '🔍 Zoom In';
+            
+            // Add zoom effect
+            productContainer.style.filter = 'brightness(1.1) contrast(1.1)';
+            setTimeout(() => {
+                productContainer.style.filter = 'none';
+            }, 400);
+        }
+        
+        // Add dynamic lighting effect
+        document.addEventListener('DOMContentLoaded', function() {
+            const studio = document.querySelector('.product-studio');
+            const lighting = document.querySelector('.studio-lighting');
+            
+            if (studio && lighting) {
+                studio.addEventListener('mousemove', function(e) {
+                    const rect = studio.getBoundingClientRect();
+                    const x = ((e.clientX - rect.left) / rect.width) * 100;
+                    const y = ((e.clientY - rect.top) / rect.height) * 100;
+                    
+                    lighting.style.left = x + '%';
+                    lighting.style.top = (y - 20) + '%';
+                    lighting.style.opacity = '0.4';
+                });
+                
+                studio.addEventListener('mouseleave', function() {
+                    lighting.style.left = '50%';
+                    lighting.style.top = '-50px';
+                    lighting.style.opacity = '0.3';
+                });
+            }
+        });
+        
+        // Design selection and scrolling functions
+        let selectedDesignId = null;
+        
+        function selectDesign(designId, designName, designImageUrl) {
+            // Remove previous selection
+            document.querySelectorAll('.design-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Add selection to clicked card
+            event.currentTarget.classList.add('selected');
+            
+            // Update hidden field
+            document.getElementById('selected_design_id').value = designId;
+            selectedDesignId = designId;
+            
+            // Update selected design name display
+            document.getElementById('selectedDesignName').textContent = 'Selected: ' + designName;
+            document.getElementById('selectedDesignName').style.color = '#4ecdc4';
+            document.getElementById('selectedDesignName').style.fontWeight = 'bold';
+            
+            // Show selected design on 3D mockup
+            const designImage = document.getElementById('selectedDesignImage');
+            const designText = document.getElementById('designText');
+            
+            if (designImageUrl) {
+                designImage.src = designImageUrl;
+                designImage.style.display = 'block';
+                designText.style.display = 'none';
+                
+                // Add entrance animation
+                designImage.style.opacity = '0';
+                designImage.style.transform = 'scale(0.5) rotateY(90deg)';
+                
+                setTimeout(() => {
+                    designImage.style.transition = 'all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                    designImage.style.opacity = '1';
+                    designImage.style.transform = 'scale(1) rotateY(0deg)';
+                }, 50);
+            } else {
+                designImage.style.display = 'none';
+                designText.style.display = 'flex';
+            }
+            
+            // Add visual feedback to card
+            const selectedCard = event.currentTarget;
+            selectedCard.style.transform = 'scale(1.1)';
+            setTimeout(() => {
+                selectedCard.style.transform = '';
+            }, 300);
+        }
+        
+        function scrollDesigns(direction) {
+            const container = document.getElementById('designScrollContainer');
+            const scrollAmount = 400;
+            
+            if (direction === 'left') {
+                container.scrollBy({
+                    left: -scrollAmount,
+                    behavior: 'smooth'
+                });
+            } else {
+                container.scrollBy({
+                    left: scrollAmount,
+                    behavior: 'smooth'
+                });
+            }
+        }
+        
+        // Add keyboard navigation for design gallery
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.getElementById('designScrollContainer');
+            if (container) {
+                container.addEventListener('keydown', function(e) {
+                    if (e.key === 'ArrowLeft') {
+                        scrollDesigns('left');
+                    } else if (e.key === 'ArrowRight') {
+                        scrollDesigns('right');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
